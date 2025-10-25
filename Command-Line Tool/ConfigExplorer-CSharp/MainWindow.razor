@@ -1,0 +1,85 @@
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web
+@using RazorConsole.Components
+@using Spectre.Console;
+@using System.Linq;
+
+
+<Border BoxBorder="BoxBorder.Rounded" Padding="new(1,0,1,0)" BorderColor="Color.Blue">
+  <Grid Columns="2">
+    <Border>
+      <Columns>
+        <TextButton Content="New Config"
+            OnClick="CreateConfig"
+            FocusedColor="@Spectre.Console.Color.Grey" />
+        <TextButton Content="Load Config"
+            OnClick="LoadConfig"
+            FocusedColor="@Spectre.Console.Color.Grey" />
+      </Columns>
+    </Border>
+    <Panel Title="Files" BorderColor="Color.Grey">
+      <Columns>
+        <TextButton Content="Settings" OnClick="LoadFile" FocusedColor="@Spectre.Console.Color.Grey"/>
+        <TextButton Content="Settings" OnClick="LoadFile" FocusedColor="@Spectre.Console.Color.Grey"/>
+        <TextButton Content="Settings" OnClick="LoadFile" FocusedColor="@Spectre.Console.Color.Grey"/>
+        <TextButton Content="Settings" OnClick="LoadFile" FocusedColor="@Spectre.Console.Color.Grey"/>
+      </Columns>
+    </Panel>
+
+
+    <Panel Title="Recent Configs" BorderColor="Color.Grey" Expand="true">
+      <Rows>
+        @foreach(string config in Configs)
+        {
+            <Markup Content="@($"{config}")" />
+        }
+      </Rows>
+    </Panel>
+    <Panel Title="Current File" BorderColor="Color.Grey" Expand="true">
+      <Grid Columns="3">
+        <TextInput Label="App Icon Background Color"
+          Placeholder="#ffffff"
+          FocusedBorderColor="@Color.MediumOrchid"
+          Expand="true" />
+        <TextInput Label="Splash Background Color"
+          Placeholder="#000000"
+          FocusedBorderColor="@Color.MediumOrchid"
+          Expand="true" />
+        <TextInput Label="Splash Content Color"
+          Placeholder="#000000"
+          FocusedBorderColor="@Color.MediumOrchid" 
+          Expand="true" />
+        <TextInput Label="Is Splash Background Color Light?"
+          Placeholder="true"
+          FocusedBorderColor="@Color.MediumOrchid"
+          Expand="true" /> 
+        <TextInput Label="Content Color"
+          Placeholder="#000000"
+          FocusedBorderColor="Color.MediumOrchid" 
+          Expand="true" />
+
+      </Grid>
+    </Panel>
+  </Grid>
+</Border>
+
+@code {
+
+  private List<string> Configs = new List<string>() { "string", "string" };
+
+  private void CreateConfig ()
+  {
+  
+  }  
+  
+  private void LoadFile()
+  {
+
+  }
+
+  private void LoadConfig() 
+  {
+
+  }
+}
+
