@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConfigMauiExplorer.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Grid>
+               <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+               </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" x:Name="mainGrid" RowDefinitions="1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1*,1">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label 
+                        Grid.Column="0" 
+                        Grid.Row="0"
+                        Text="Base Uri"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        x:Name="BaseUri"
+                        Placeholder="https://relesys.relesysapp.net"/>
+                        
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Text="Current App Uri"/>
+                    <Entry 
+                        Grid.Column="1"
+                        x:Name="CurrentAppUri"
+                        Grid.Row="1"
+                        Placeholder="https://relesys.relesysapp.net"/>
+                    
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Text="Api Uri"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        x:Name="ApiUri"
+                        Placeholder="https://native.relesysapp.net"/>                
+                     
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Text="Login Uri"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        x:Name="LoginUri"
+                        Placeholder="https://login.relesysapp.net"/> 
+                      
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="4"
+                        Text="Native app settings token"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="4"
+                        x:Name="SettingsToken"
+                        Placeholder="f97c4322-c4e2-4403-a0ac-4fcc72f39159"/>
+                    
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="5"
+                        Text="Is None Store app"/>
+                    <CheckBox
+                        Grid.Column="1"
+                        Grid.Row="5"
+                        x:Name="IsNoneStore"/>
+                    
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="6"
+                        Text="Is Multibranded app"/>
+                    <CheckBox
+                        Grid.Column="1"
+                        Grid.Row="6"
+                        x:Name="IsMultibrandedApp" />
+                    
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="7"
+                        Text="Push Provider Reference"/>
+                    
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="7">
+                       <Entry
+                            x:Name="ProviderReferenceAndroid"
+                            Placeholder="relesyscore"/>
+                       <Entry
+                           x:Name="ProviderReferenceIos"
+                           Placeholder="teamid"/>
+                    </VerticalStackLayout>
+                    
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="8"
+                        Text="App Host Names"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="8"
+                        x:Name="AppHostNames"
+                        Placeholder="relesys.relesysapp.net,comma seperate with with multibrand"/>
+                    
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="9"
+                        Text="Splash Background Color"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="9"
+                        x:Name="SplashBackgroundColor"
+                        Placeholder="#ffffff"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="10"
+                        Text="Splash Content Color"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="10"
+                        x:Name="SplashContentColor"
+                        Placeholder="#ffffff"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="11"
+                        Text="Is Splash Background color light"/>
+                    <CheckBox
+                        Grid.Column="1"
+                        Grid.Row="11"
+                        x:Name="IsSplasHBackgroudColorLight" />
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="12"
+                        Text="App Icon Background Color"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="12"
+                        x:Name="AppIconBackgroundColor"
+                        Placeholder="#ffffff"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="13"
+                        Text="Notification Icon Background Color"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="13"
+                        x:Name="NotificationIconBackgroundColor"
+                        Placeholder="#ffffff"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="14"
+                        Text="Android Keystore Password"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="14"
+                        x:Name="AndroidKeystorePassword"
+                        Placeholder="************"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="15"
+                        Text="Android Keystore Alias"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="15"
+                        x:Name="AndroidKeystoreAlias"
+                        Placeholder="net.relesysapp.relesys"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="16"
+                        Text="iOS Certificate Password"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="16"
+                        x:Name="iOSCertificatePassword"
+                        Placeholder="************"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="17"
+                        Text="iOS Package Name"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="17"
+                        x:Name="PackageNameIos"
+                        Placeholder="net.relesysapp.relesys"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="18"
+                        Text="Android Package Name"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="18"
+                        x:Name="PackageNameAndroid"
+                        Placeholder="net.relesysapp.relesys"/>
+                    <Label 
+                        Grid.Column="0"
+                        Grid.Row="19"
+                        Text="App Name"/>
+                    <Entry 
+                        Grid.Column="1"
+                        Grid.Row="19"
+                        x:Name="AppName"
+                        Placeholder="Relesys Team"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                   <Grid RowDefinitions="*,*,*">
+                       <Grid.ColumnDefinitions>
+                           <ColumnDefinition Width="*" />
+                           <ColumnDefinition Width="*" />
+                       </Grid.ColumnDefinitions> 
+                       
+                       <VerticalStackLayout Grid.Row="0" Grid.Column="0" >
+                           <Label Text="App Icon" HorizontalOptions="Center" Padding="0,10,0,0"/>
+                           <Image x:Name="SelectedAppIcon" HeightRequest="200" WidthRequest="200" Aspect="AspectFit" />
+                           <Button Text="Pick an Image" Clicked="OnPickAppIconImageClicked" />
+                       </VerticalStackLayout>
+                       <VerticalStackLayout  Grid.Row="0" Grid.Column="1">
+                           <Label Text="Splash Icon" HorizontalOptions="Center" Padding="0,10,0,0"/>
+                           <Image x:Name="SelectedSplashIcon" HeightRequest="200" WidthRequest="200" Aspect="AspectFit" />
+                           <Button Text="Pick an Image" Clicked="OnPickSplashImageClicked" />
+                       </VerticalStackLayout>
+                       <VerticalStackLayout Grid.Row="1" Grid.Column="0" >
+                           <Label Text="Notification Icon" HorizontalOptions="Center" Padding="0,10,0,0"/>
+                           <Image x:Name="SelectedNotificationIcon" HeightRequest="200" WidthRequest="200" Aspect="AspectFit" />
+                           <Button Text="Pick an Image" Clicked="OnPickNotificationImageClicked" />
+                       </VerticalStackLayout>
+                       <VerticalStackLayout Grid.Row="1" Grid.Column="1" >
+                           <Label Text="Android keystore.p12 file" HorizontalOptions="Center" Padding="0,14,0,14"/>
+                           <Button Text="Pick Keystore" x:Name="Keystore" Clicked="OnPickKeystoreClicked" />
+                           
+                           <Label Text="iOS Certificate.P12 file" HorizontalOptions="Center" Padding="0,14,0,14"/>
+                           <Button Text="Pick iOS Certificate" x:Name="Certificate" Clicked="OnPickCertificateClicked" />
+                           
+                           <Label Text="iOS Profile file" HorizontalOptions="Center" Padding="0,14,0,14"/>
+                           <Button Text="Pick iOS Profile" x:Name="Profile" Clicked="OnPickProfileClicked" />
+                       </VerticalStackLayout>
+                       
+                       <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2" >
+                           <Label Text="Google Service Json File" HorizontalOptions="Center" Padding="0,10,0,0"/>
+                           <Button Text="Pick Google Service Json File"  Clicked="OnPickGoogleServiceClicked" x:Name="Google"/>
+                       </VerticalStackLayout>
+                   </Grid> 
+                </Grid>
+            </Grid>
+            <Button
+                x:Name="CreateBtn"
+                Text="Create App" 
+                Clicked="OnCreateClicked"
+                HorizontalOptions="Fill" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
