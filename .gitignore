@@ -2810,3 +2810,5 @@
 /Multi-platform Apps/ConfigMauiExplorer/ConfigMauiExplorer/obj/project.nuget.cache
 /Multi-platform Apps/ConfigMauiExplorer/ConfigMauiExplorer/obj/project.packagespec.json
 /Multi-platform Apps/ConfigMauiExplorer/ConfigMauiExplorer/obj/rider.project.restore.info
+/Command-Line Tool/ConfigExplorer-CSharp/bin/* 
+/Command-Line Tool/ConfigExplorer-CSharp/obj/*
