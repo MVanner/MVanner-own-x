@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ConfigMauiExplorer.ViewModels"
              x:Class="ConfigMauiExplorer.MainPage">
 
+    <ContentPage.BindingContext>
+        <viewmodels:MainPageViewModel />
+    </ContentPage.BindingContext>
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
@@ -27,6 +31,7 @@
                         Grid.Column="1"
                         Grid.Row="0"
                         x:Name="BaseUri"
+                        Text="{Binding BaseUri, Mode=TwoWay}"
                         Placeholder="https://relesys.relesysapp.net"/>
                         
                     <Label 
@@ -37,6 +42,7 @@
                         Grid.Column="1"
                         x:Name="CurrentAppUri"
                         Grid.Row="1"
+                        Text="{Binding CurrentAppUri, Mode=TwoWay}"
                         Placeholder="https://relesys.relesysapp.net"/>
                     
                     <Label 
@@ -47,6 +53,7 @@
                         Grid.Column="1"
                         Grid.Row="2"
                         x:Name="ApiUri"
+                        Text="{Binding ApiUri, Mode=TwoWay}"
                         Placeholder="https://native.relesysapp.net"/>                
                      
                     <Label 
@@ -57,6 +64,7 @@
                         Grid.Column="1"
                         Grid.Row="3"
                         x:Name="LoginUri"
+                        Text="{Binding LoginUri, Mode=TwoWay}"
                         Placeholder="https://login.relesysapp.net"/> 
                       
                     <Label 
@@ -67,6 +75,7 @@
                         Grid.Column="1"
                         Grid.Row="4"
                         x:Name="SettingsToken"
+                        Text="{Binding NativeAppSettingsToken, Mode=TwoWay}"
                         Placeholder="f97c4322-c4e2-4403-a0ac-4fcc72f39159"/>
                     
                     <Label 
@@ -95,9 +104,11 @@
                     <VerticalStackLayout Grid.Column="1" Grid.Row="7">
                        <Entry
                             x:Name="ProviderReferenceAndroid"
+                            Text="{Binding PushSettingsAndroid.Value.ProviderReference, Mode=TwoWay}"
                             Placeholder="relesyscore"/>
                        <Entry
                            x:Name="ProviderReferenceIos"
+                           Text="{Binding PushSettingsIOS.Value.ProviderReference, Mode=TwoWay}"
                            Placeholder="teamid"/>
                     </VerticalStackLayout>
                     
@@ -109,6 +120,7 @@
                         Grid.Column="1"
                         Grid.Row="8"
                         x:Name="AppHostNames"
+                        Text="{Binding AppConfiguration.Value.AppHostNames, Mode=TwoWay}"
                         Placeholder="relesys.relesysapp.net,comma seperate with with multibrand"/>
                     
                     <Label 
