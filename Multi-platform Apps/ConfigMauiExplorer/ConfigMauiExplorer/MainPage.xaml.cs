@@ -6,6 +6,7 @@ using ConfigMauiExplorer.Models;
 using ConfigMauiExplorer.Services;
 using Microsoft.Maui.Platform;
 using System.Text.Json.Serialization;
+using ConfigMauiExplorer.ViewModels;
 using UniformTypeIdentifiers;
 
 namespace ConfigMauiExplorer;
@@ -22,6 +23,8 @@ public partial class MainPage : ContentPage
     {
         _folderPicker = folderPicker;
         InitializeComponent();
+        BindingContext = new MainPageViewModel();
+        
         var rows = mainGrid.Count / 2;
         for (int i = 0; i < rows; i++)
         {
