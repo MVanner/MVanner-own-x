@@ -1,19 +1,12 @@
-using ConfigMauiExplorer.Models;
 using ConfigMauiExplorer.Validation.Interfaces;
 
 namespace ConfigMauiExplorer.Validation.Rules;
 
-public class IsIOColorRule<T> : IValidationRule<T>
+public class IsColorRule<T> : IValidationRule<T>
 {
     public string ValidationMessage { get; set; }
-    public bool Check(T value)
-    {
-        if (value is not AndroidColors colors) return false;
-        return IsValidColor(colors.AppIconBackgroundColor) && 
-               IsValidColor(colors.NotificationIconBackgroundColor) && 
-               IsValidColor(colors.SplashBackgroundColor) &&
-               IsValidColor(colors.SplashBackgroundColor);
-    }
+    
+    public bool Check(T value) => value is string str && !string.IsNullOrWhiteSpace(str) && IsValidColor(str);
 
     private bool IsValidColor(string str)
     {

@@ -13,17 +13,22 @@ namespace ConfigMauiExplorer;
 
 public partial class MainPage : ContentPage
 {
-    public FileResult NotificationImage { get; set; }
-    public FileResult AppIconImage { get; set; }
-    public FileResult SplashIconImage { get; set; }
-    public FileResult GoogleServices { get; set; } 
-    private readonly IFolderPicker _folderPicker; 
+    private FileResult NotificationImage { get; set; }
+    private FileResult AppIconImage { get; set; }
+    private FileResult SplashIconImage { get; set; }
+    private FileResult GoogleServices { get; set; } 
+    private FileResult Keystore { get; set; }
+    private FileResult Certificate { get; set; }
+    private FileResult Profile { get; set; }
     
-    public MainPage(IFolderPicker folderPicker)
+    private readonly IFolderPicker _folderPicker; 
+    private readonly MainPageViewModel _viewModel;
+    
+    public MainPage(IFolderPicker folderPicker, MainPageViewModel viewModel)
     {
         _folderPicker = folderPicker;
         InitializeComponent();
-        BindingContext = new MainPageViewModel();
+        BindingContext = _viewModel = viewModel;
         
         var rows = mainGrid.Count / 2;
         for (int i = 0; i < rows; i++)
@@ -45,123 +50,156 @@ public partial class MainPage : ContentPage
 
     private async void OnCreateClicked(object? sender, EventArgs e)
     {
-        AndroidColors androidColors = new AndroidColors();
-        iOSColors iOSColors = new iOSColors();
-        AppConfiguration androidAppConfig = new AppConfiguration();
-        AppConfiguration iOSAppConfig = new AppConfiguration();
-        KeystoreInfo keystoreInfo = new KeystoreInfo();
-        CertificateInfo certificateInfo = new CertificateInfo();
-        Settings iosSettings = new Settings();
-        Settings androidSettings = new Settings();
-
-        iosSettings.ApplicationName = AppName.Text;
-        iosSettings.PackageName = PackageNameIos.Text;
-        androidSettings.ApplicationName = AppName.Text;
-        androidSettings.PackageName = PackageNameAndroid.Text;
-
-        certificateInfo.Password = iOSCertificatePassword.Text;
-        keystoreInfo.Password = AndroidKeystorePassword.Text;
-        keystoreInfo.Alias = AndroidKeystoreAlias.Text;
-
-        iOSColors.AppIconBackgroundColor = AppIconBackgroundColor.Text;
-        iOSColors.SplashBackgroundColor = SplashBackgroundColor.Text;
-        iOSColors.SplashContentColor = SplashContentColor.Text;
-        iOSColors.SplashBackgroundIsLight = IsSplasHBackgroudColorLight.IsChecked;
-        
-        androidColors.AppIconBackgroundColor = AppIconBackgroundColor.Text;
-        androidColors.SplashBackgroundColor = SplashBackgroundColor.Text;
-        androidColors.SplashContentColor = SplashContentColor.Text;
-        androidColors.SplashBackgroundIsLight = IsSplasHBackgroudColorLight.IsChecked;
-        androidColors.NotificationIconBackgroundColor = NotificationIconBackgroundColor.Text;
-
-        androidAppConfig.ApiUri = ApiUri.Text;
-        androidAppConfig.BaseUri = BaseUri.Text;
-        androidAppConfig.LoginUri = LoginUri.Text;
-        androidAppConfig.CurrentAppUri = CurrentAppUri.Text;
-        androidAppConfig.IsMultibrandedApp = IsMultibrandedApp.IsChecked;
-        androidAppConfig.IsNonStoreApp = IsMultibrandedApp.IsChecked;
-        androidAppConfig.NativeAppSettingsToken = SettingsToken.Text;
-        androidAppConfig.AppHostNames = AppHostNames.Text?.Split(',').Select(x => x.Trim()).ToList() ?? new List<string>();
-        
-        iOSAppConfig.ApiUri = ApiUri.Text;
-        iOSAppConfig.BaseUri = BaseUri.Text;
-        iOSAppConfig.LoginUri = LoginUri.Text;
-        iOSAppConfig.CurrentAppUri = CurrentAppUri.Text;
-        iOSAppConfig.IsMultibrandedApp = IsMultibrandedApp.IsChecked;
-        iOSAppConfig.IsNonStoreApp = IsMultibrandedApp.IsChecked;
-        iOSAppConfig.NativeAppSettingsToken = SettingsToken.Text;
-        iOSAppConfig.AppHostNames = AppHostNames.Text?.Split(',').Select(x => x.Trim()).ToList() ?? new List<string>();
-        
-        androidAppConfig.PushSettings = new PushSettings()
+        if (_viewModel.ValidateAll())
         {
-            ProviderReference = ProviderReferenceAndroid.Text,
-            PushProviderType = "firebase"
-        };
-
-        iOSAppConfig.PushSettings = new PushSettings()
-        {
-            ProviderReference = ProviderReferenceIos.Text,
-            PushProviderType = "apns"
-        };
-        
-        static FilePickerFileType PlatformFolderType() =>
-            new(new Dictionary<DevicePlatform, IEnumerable<string>>
+            AndroidColors androidColors = new AndroidColors();
+            iOSColors iOSColors = new iOSColors();
+            AppConfiguration androidAppConfig = new AppConfiguration();
+            AppConfiguration iOSAppConfig = new AppConfiguration();
+            KeystoreInfo keystoreInfo = new KeystoreInfo();
+            CertificateInfo certificateInfo = new CertificateInfo();
+            Settings iosSettings = new Settings();
+            Settings androidSettings = new Settings();
+            
+            iosSettings.ApplicationName = AppName.Text;
+            iosSettings.PackageName = PackageNameIos.Text;
+            androidSettings.ApplicationName = AppName.Text;
+            androidSettings.PackageName = PackageNameAndroid.Text;
+            
+            certificateInfo.Password = iOSCertificatePassword.Text;
+            keystoreInfo.Password = AndroidKeystorePassword.Text;
+            keystoreInfo.Alias = AndroidKeystoreAlias.Text;
+            
+            iOSColors.AppIconBackgroundColor = AppIconBackgroundColor.Text;
+            iOSColors.SplashBackgroundColor = SplashBackgroundColor.Text;
+            iOSColors.SplashContentColor = SplashContentColor.Text;
+            iOSColors.SplashBackgroundIsLight = IsSplasHBackgroudColorLight.IsChecked;
+            
+            androidColors.AppIconBackgroundColor = AppIconBackgroundColor.Text;
+            androidColors.SplashBackgroundColor = SplashBackgroundColor.Text;
+            androidColors.SplashContentColor = SplashContentColor.Text;
+            androidColors.SplashBackgroundIsLight = IsSplasHBackgroudColorLight.IsChecked;
+            androidColors.NotificationIconBackgroundColor = NotificationIconBackgroundColor.Text;
+            
+            androidAppConfig.ApiUri = ApiUri.Text;
+            androidAppConfig.BaseUri = BaseUri.Text;
+            androidAppConfig.LoginUri = LoginUri.Text;
+            androidAppConfig.CurrentAppUri = CurrentAppUri.Text;
+            androidAppConfig.IsMultibrandedApp = IsMultibrandedApp.IsChecked;
+            androidAppConfig.IsNonStoreApp = IsMultibrandedApp.IsChecked;
+            androidAppConfig.NativeAppSettingsToken = SettingsToken.Text;
+            androidAppConfig.AppHostNames = AppHostNames.Text?.Split(',').Select(x => x.Trim()).ToList() ?? new List<string>();
+            
+            iOSAppConfig.ApiUri = ApiUri.Text;
+            iOSAppConfig.BaseUri = BaseUri.Text;
+            iOSAppConfig.LoginUri = LoginUri.Text;
+            iOSAppConfig.CurrentAppUri = CurrentAppUri.Text;
+            iOSAppConfig.IsMultibrandedApp = IsMultibrandedApp.IsChecked;
+            iOSAppConfig.IsNonStoreApp = IsMultibrandedApp.IsChecked;
+            iOSAppConfig.NativeAppSettingsToken = SettingsToken.Text;
+            iOSAppConfig.AppHostNames = AppHostNames.Text?.Split(',').Select(x => x.Trim()).ToList() ?? new List<string>();
+            
+            androidAppConfig.PushSettings = new PushSettings()
             {
-                { DevicePlatform.iOS, new[] { UTTypes.Folder.Identifier } },
-                { DevicePlatform.MacCatalyst, new[] { UTTypes.Folder.Identifier } },
-                { DevicePlatform.Android, new[] { "application/vnd.android.package-archive" } },
-                { DevicePlatform.WinUI, new[] { ".folder" } }
-            });
-        var options = new PickOptions
-        {
-            PickerTitle = "Please select a folder to save the app configurations",
-            FileTypes = PlatformFolderType()
-        };
-
-        //var folderPath = await _folderPicker.PickFolderAsync();
-        var folderPath = await FilePicker.PickAsync(options);
-        if (!string.IsNullOrEmpty(folderPath.FullPath))
-        {
-            var androidPath = Path.Combine(folderPath.FullPath, AppName.Text, "Android");
-            var iosPath = Path.Combine(folderPath.FullPath, AppName.Text, "iOS");
-            Directory.CreateDirectory(androidPath);
-            Directory.CreateDirectory(iosPath);
+                ProviderReference = ProviderReferenceAndroid.Text,
+                PushProviderType = "firebase"
+            };
             
-            var iosAssetsDirectory = Path.Combine(iosPath, "Assets");
-            Directory.CreateDirectory(iosAssetsDirectory);
-            var androidAssetsDirectory = Path.Combine(androidPath, "Assets");
-            Directory.CreateDirectory(androidAssetsDirectory);
-            
-            await File.WriteAllTextAsync(Path.Combine(androidPath, "appConfiguration.json"), JsonSerializer.Serialize(androidAppConfig));
-            await File.WriteAllTextAsync(Path.Combine(iosPath, "appConfiguration.json"), JsonSerializer.Serialize(iOSAppConfig));
-            await File.WriteAllTextAsync(Path.Combine(androidPath, "colors.json"), JsonSerializer.Serialize(androidColors));
-            await File.WriteAllTextAsync(Path.Combine(iosPath, "colors.json"), JsonSerializer.Serialize(iOSColors));
-            await File.WriteAllTextAsync(Path.Combine(androidPath, "keystore-info.json"), JsonSerializer.Serialize(keystoreInfo));
-            await File.WriteAllTextAsync(Path.Combine(iosPath, "certificate-info.json"), JsonSerializer.Serialize(certificateInfo));
-            await File.WriteAllTextAsync(Path.Combine(androidPath, "settings.json"), JsonSerializer.Serialize(androidSettings));
-            await File.WriteAllTextAsync(Path.Combine(iosPath, "settings.json"), JsonSerializer.Serialize(iosSettings));
-            
-            using (var stream = await GoogleServices.OpenReadAsync())
+            iOSAppConfig.PushSettings = new PushSettings()
             {
-                using var ms = new MemoryStream();
-                await stream.CopyToAsync(ms);
-                await File.WriteAllBytesAsync(Path.Combine(androidPath, "google-services.json"), ms.ToArray());
+                ProviderReference = ProviderReferenceIos.Text,
+                PushProviderType = "apns"
+            };
+            
+            static FilePickerFileType PlatformFolderType() =>
+                new(new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.iOS, new[] { UTTypes.Folder.Identifier } },
+                    { DevicePlatform.MacCatalyst, new[] { UTTypes.Folder.Identifier } },
+                    { DevicePlatform.Android, new[] { "application/vnd.android.package-archive" } },
+                    { DevicePlatform.WinUI, new[] { ".folder" } }
+                });
+            var options = new PickOptions
+            {
+                PickerTitle = "Please select a folder to save the app configurations",
+                FileTypes = PlatformFolderType()
+            };
+            
+            //var folderPath = await _folderPicker.PickFolderAsync();
+            var folderPath = await FilePicker.PickAsync(options);
+            if (!string.IsNullOrEmpty(folderPath.FullPath))
+            {
+                var androidPath = Path.Combine(folderPath.FullPath, AppName.Text, "Android");
+                var iosPath = Path.Combine(folderPath.FullPath, AppName.Text, "iOS");
+                Directory.CreateDirectory(androidPath);
+                Directory.CreateDirectory(iosPath);
+                
+                var iosAssetsDirectory = Path.Combine(iosPath, "Assets");
+                Directory.CreateDirectory(iosAssetsDirectory);
+                var androidAssetsDirectory = Path.Combine(androidPath, "Assets");
+                Directory.CreateDirectory(androidAssetsDirectory);
+                
+                await File.WriteAllTextAsync(Path.Combine(androidPath, "appConfiguration.json"), JsonSerializer.Serialize(androidAppConfig));
+                await File.WriteAllTextAsync(Path.Combine(iosPath, "appConfiguration.json"), JsonSerializer.Serialize(iOSAppConfig));
+                await File.WriteAllTextAsync(Path.Combine(androidPath, "colors.json"), JsonSerializer.Serialize(androidColors));
+                await File.WriteAllTextAsync(Path.Combine(iosPath, "colors.json"), JsonSerializer.Serialize(iOSColors));
+                await File.WriteAllTextAsync(Path.Combine(androidPath, "keystore-info.json"), JsonSerializer.Serialize(keystoreInfo));
+                await File.WriteAllTextAsync(Path.Combine(iosPath, "certificate-info.json"), JsonSerializer.Serialize(certificateInfo));
+                await File.WriteAllTextAsync(Path.Combine(androidPath, "settings.json"), JsonSerializer.Serialize(androidSettings));
+                await File.WriteAllTextAsync(Path.Combine(iosPath, "settings.json"), JsonSerializer.Serialize(iosSettings));
+
+                await using (var stream = await GoogleServices.OpenReadAsync())
+                {
+                    using var ms = new MemoryStream();
+                    await stream.CopyToAsync(ms);
+                    await File.WriteAllBytesAsync(Path.Combine(androidPath, "google-services.json"), ms.ToArray());
+                }
+
+                if (string.IsNullOrWhiteSpace(KeystoreText.Text) == false)
+                {
+                    await using (var stream = await Keystore.OpenReadAsync())
+                    {
+                        using var ms = new MemoryStream();
+                        await stream.CopyToAsync(ms);
+                        await File.WriteAllBytesAsync(Path.Combine(androidPath, "keystore.p12"), ms.ToArray());
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(CertificateText.Text) == false)
+                {
+                    await using (var stream = await Certificate.OpenReadAsync())
+                    {
+                        using var ms = new MemoryStream();
+                        await stream.CopyToAsync(ms);
+                        await File.WriteAllBytesAsync(Path.Combine(iosPath, "certificate.p12"), ms.ToArray());
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(ProfileText.Text) == false)
+                {
+                    await using (var stream = await Profile.OpenReadAsync())
+                    {
+                        using var ms = new MemoryStream();
+                        await stream.CopyToAsync(ms);
+                        await File.WriteAllBytesAsync(Path.Combine(iosPath, "provisioning-profile.mobileprovision"), ms.ToArray());
+                    }
+                }
+                
+                await GenerateAssets(Path.Combine(folderPath.FullPath, AppName.Text), androidAssetsDirectory, iosAssetsDirectory);
+                
+                await DisplayAlert("Success", "Apps created successfully!", "OK");
             }
-
-            await GenerateAssets(Path.Combine(folderPath.FullPath, AppName.Text), androidAssetsDirectory, iosAssetsDirectory);
-            
-            await DisplayAlert("Success", "Apps created successfully!", "OK");
-        }
-        else
-        {
-            await DisplayAlert("Error", "No folder selected!", "OK");
+            else
+            {
+                await DisplayAlert("Error", "No folder selected!", "OK");
+            }
         }
     }
 
     private async Task GenerateAssets(string folder, string androidAssetsDirectory, string iosAssetsDirectory)  
     {
         var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://native.relesysapp.net/api/builds/assets/generate?code=xxxxxxxxxxx");
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://native.relesysapp.net/api/builds/assets/generate?code=xxxxxxxxxx");
         var content = new MultipartFormDataContent();
         content.Add(new StringContent(AppIconBackgroundColor.Text), "IconBackgroundColor");
         content.Add(new StringContent("android,ios"), "Targets");
@@ -301,8 +339,8 @@ public partial class MainPage : ContentPage
                 return;
 
             var stream = await result.OpenReadAsync();
-
-            Keystore.Text = result.FullPath;
+            Keystore = result;
+            KeystoreText.Text = result.FullPath;
         }
         catch (Exception exception)
         {
@@ -321,8 +359,8 @@ public partial class MainPage : ContentPage
                 return;
 
             var stream = await result.OpenReadAsync();
-
-            Certificate.Text = result.FullPath;
+            Certificate = result;
+            CertificateText.Text = result.FullPath;
         }
         catch (Exception exception)
         {
@@ -341,8 +379,8 @@ public partial class MainPage : ContentPage
                 return;
 
             var stream = await result.OpenReadAsync();
-
-            Profile.Text = result.FullPath;
+            Profile = result;
+            ProfileText.Text = result.FullPath;
         }
         catch (Exception exception)
         {

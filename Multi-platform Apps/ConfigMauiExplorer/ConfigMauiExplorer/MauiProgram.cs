@@ -1,5 +1,6 @@
 ﻿using ConfigMauiExplorer.Interfaces;
 using ConfigMauiExplorer.Services;
+using ConfigMauiExplorer.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace ConfigMauiExplorer;
@@ -17,6 +18,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
         builder.Services.AddSingleton<IFolderPicker, FolderPicker>();
+        builder.Services.AddSingleton<MainPageViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

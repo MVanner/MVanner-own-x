@@ -77,6 +77,9 @@ function love.update(dt)
 	player.body:setLinearVelocity(playerDx, playerDy)
 	computer.body:setLinearVelocity(computerDx, computerDy)
 
+
+	ball.body:setLinearVelocity(0, 300)
+
 	player.x, player.y = player.body:getPosition()
 	computer.x, computer.y = computer.body:getPosition()
 

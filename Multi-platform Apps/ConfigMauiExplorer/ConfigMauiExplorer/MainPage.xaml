@@ -31,8 +31,17 @@
                         Grid.Column="1"
                         Grid.Row="0"
                         x:Name="BaseUri"
-                        Text="{Binding BaseUri, Mode=TwoWay}"
-                        Placeholder="https://relesys.relesysapp.net"/>
+                        Text="{Binding BaseUri.Value, Mode=TwoWay}"
+                        Placeholder="https://relesys.relesysapp.net">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding BaseUri.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                         
                     <Label 
                         Grid.Column="0"
@@ -42,8 +51,17 @@
                         Grid.Column="1"
                         x:Name="CurrentAppUri"
                         Grid.Row="1"
-                        Text="{Binding CurrentAppUri, Mode=TwoWay}"
-                        Placeholder="https://relesys.relesysapp.net"/>
+                        Text="{Binding CurrentAppUri.Value, Mode=TwoWay}"
+                        Placeholder="https://relesys.relesysapp.net">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding CurrentAppUri.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     
                     <Label 
                         Grid.Column="0"
@@ -53,8 +71,17 @@
                         Grid.Column="1"
                         Grid.Row="2"
                         x:Name="ApiUri"
-                        Text="{Binding ApiUri, Mode=TwoWay}"
-                        Placeholder="https://native.relesysapp.net"/>                
+                        Text="{Binding ApiUri.Value, Mode=TwoWay}"
+                        Placeholder="https://native.relesysapp.net">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding ApiUri.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>                
                      
                     <Label 
                         Grid.Column="0"
@@ -64,8 +91,17 @@
                         Grid.Column="1"
                         Grid.Row="3"
                         x:Name="LoginUri"
-                        Text="{Binding LoginUri, Mode=TwoWay}"
-                        Placeholder="https://login.relesysapp.net"/> 
+                        Text="{Binding LoginUri.Value, Mode=TwoWay}"
+                        Placeholder="https://login.relesysapp.net">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding LoginUri.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                       
                     <Label 
                         Grid.Column="0"
@@ -75,8 +111,17 @@
                         Grid.Column="1"
                         Grid.Row="4"
                         x:Name="SettingsToken"
-                        Text="{Binding NativeAppSettingsToken, Mode=TwoWay}"
-                        Placeholder="f97c4322-c4e2-4403-a0ac-4fcc72f39159"/>
+                        Text="{Binding NativeAppSettingsToken.Value, Mode=TwoWay}"
+                        Placeholder="f97c4322-c4e2-4403-a0ac-4fcc72f39159">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding NativeAppSettingsToken.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     
                     <Label 
                         Grid.Column="0"
@@ -104,12 +149,30 @@
                     <VerticalStackLayout Grid.Column="1" Grid.Row="7">
                        <Entry
                             x:Name="ProviderReferenceAndroid"
-                            Text="{Binding PushSettingsAndroid.Value.ProviderReference, Mode=TwoWay}"
-                            Placeholder="relesyscore"/>
+                            Text="{Binding PushProviderSRefAndroid.Value, Mode=TwoWay}"
+                            Placeholder="relesyscore">
+                            <Entry.Triggers>
+                                <DataTrigger 
+                                    TargetType="Entry"
+                                    Binding="{Binding PushProviderSRefAndroid.IsValid}"
+                                    Value="False">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                       </Entry>
                        <Entry
                            x:Name="ProviderReferenceIos"
-                           Text="{Binding PushSettingsIOS.Value.ProviderReference, Mode=TwoWay}"
-                           Placeholder="teamid"/>
+                           Text="{Binding PushProviderSRefIOS.Value, Mode=TwoWay}"
+                           Placeholder="teamid">
+                           <Entry.Triggers>
+                                <DataTrigger 
+                                    TargetType="Entry"
+                                    Binding="{Binding PushProviderSRefIOS.IsValid}"
+                                    Value="False">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                       </Entry>
                     </VerticalStackLayout>
                     
                     <Label 
@@ -120,8 +183,17 @@
                         Grid.Column="1"
                         Grid.Row="8"
                         x:Name="AppHostNames"
-                        Text="{Binding AppConfiguration.Value.AppHostNames, Mode=TwoWay}"
-                        Placeholder="relesys.relesysapp.net,comma seperate with with multibrand"/>
+                        Text="{Binding AppHostNames.Value, Mode=TwoWay}"
+                        Placeholder="relesys.relesysapp.net,comma seperate with with multibrand">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding AppHostNames.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     
                     <Label 
                         Grid.Column="0"
@@ -130,8 +202,18 @@
                     <Entry 
                         Grid.Column="1"
                         Grid.Row="9"
+                        Text="{Binding SplashBackgroundColor.Value, Mode=TwoWay}"
                         x:Name="SplashBackgroundColor"
-                        Placeholder="#ffffff"/>
+                        Placeholder="#ffffff">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding SplashBackgroundColor.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="10"
@@ -139,8 +221,18 @@
                     <Entry 
                         Grid.Column="1"
                         Grid.Row="10"
+                        Text="{Binding SplashContentColor.Value, Mode=TwoWay}"
                         x:Name="SplashContentColor"
-                        Placeholder="#ffffff"/>
+                        Placeholder="#ffffff">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding SplashContentColor.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="11"
@@ -156,8 +248,18 @@
                     <Entry 
                         Grid.Column="1"
                         Grid.Row="12"
+                        Text="{Binding AppIconBackgroundColor.Value, Mode=TwoWay}"
                         x:Name="AppIconBackgroundColor"
-                        Placeholder="#ffffff"/>
+                        Placeholder="#ffffff">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding AppIconBackgroundColor.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="13"
@@ -165,8 +267,18 @@
                     <Entry 
                         Grid.Column="1"
                         Grid.Row="13"
+                        Text="{Binding NotificationIconBackgroundColor.Value, Mode=TwoWay}"
                         x:Name="NotificationIconBackgroundColor"
-                        Placeholder="#ffffff"/>
+                        Placeholder="#ffffff">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding NotificationIconBackgroundColor.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="14"
@@ -174,8 +286,18 @@
                     <Entry 
                         Grid.Column="1"
                         Grid.Row="14"
+                        Text="{Binding KeystorePassword.Value, Mode=TwoWay}"
                         x:Name="AndroidKeystorePassword"
-                        Placeholder="************"/>
+                        Placeholder="************">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding KeystorePassword.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="15"
@@ -184,7 +306,17 @@
                         Grid.Column="1"
                         Grid.Row="15"
                         x:Name="AndroidKeystoreAlias"
-                        Placeholder="net.relesysapp.relesys"/>
+                        Text="{Binding KeystoreAlias.Value, Mode=TwoWay}"
+                        Placeholder="net.relesysapp.relesys">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding KeystoreAlias.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="16"
@@ -192,8 +324,18 @@
                     <Entry 
                         Grid.Column="1"
                         Grid.Row="16"
+                        Text="{Binding CertificatePassword.Value, Mode=TwoWay}"
                         x:Name="iOSCertificatePassword"
-                        Placeholder="************"/>
+                        Placeholder="************">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding CertificatePassword.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="17"
@@ -202,7 +344,17 @@
                         Grid.Column="1"
                         Grid.Row="17"
                         x:Name="PackageNameIos"
-                        Placeholder="net.relesysapp.relesys"/>
+                        Text="{Binding SettingsPackageNameiOS.Value, Mode=TwoWay}"
+                        Placeholder="net.relesysapp.relesys">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding SettingsPackageNameiOS.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="18"
@@ -211,7 +363,17 @@
                         Grid.Column="1"
                         Grid.Row="18"
                         x:Name="PackageNameAndroid"
-                        Placeholder="net.relesysapp.relesys"/>
+                        Text="{Binding SettingsPackageNameAndroid.Value, Mode=TwoWay}"
+                        Placeholder="net.relesysapp.relesys">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding SettingsPackageNameAndroid.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                     <Label 
                         Grid.Column="0"
                         Grid.Row="19"
@@ -220,7 +382,17 @@
                         Grid.Column="1"
                         Grid.Row="19"
                         x:Name="AppName"
-                        Placeholder="Relesys Team"/>
+                        Text="{Binding ApplicationName.Value, Mode=TwoWay}"
+                        Placeholder="Relesys Team">
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding ApplicationName.IsValid}"
+                                Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
                 </Grid>
                 <Grid Grid.Column="1">
                    <Grid RowDefinitions="*,*,*">
@@ -246,13 +418,13 @@
                        </VerticalStackLayout>
                        <VerticalStackLayout Grid.Row="1" Grid.Column="1" >
                            <Label Text="Android keystore.p12 file" HorizontalOptions="Center" Padding="0,14,0,14"/>
-                           <Button Text="Pick Keystore" x:Name="Keystore" Clicked="OnPickKeystoreClicked" />
+                           <Button Text="Pick Keystore" x:Name="KeystoreText" Clicked="OnPickKeystoreClicked" />
                            
                            <Label Text="iOS Certificate.P12 file" HorizontalOptions="Center" Padding="0,14,0,14"/>
-                           <Button Text="Pick iOS Certificate" x:Name="Certificate" Clicked="OnPickCertificateClicked" />
+                           <Button Text="Pick iOS Certificate" x:Name="CertificateText" Clicked="OnPickCertificateClicked" />
                            
                            <Label Text="iOS Profile file" HorizontalOptions="Center" Padding="0,14,0,14"/>
-                           <Button Text="Pick iOS Profile" x:Name="Profile" Clicked="OnPickProfileClicked" />
+                           <Button Text="Pick iOS Profile" x:Name="ProfileText" Clicked="OnPickProfileClicked" />
                        </VerticalStackLayout>
                        
                        <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2" >
