@@ -11,6 +11,9 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+            <HorizontalStackLayout>
+                <Button Text="Load Xamarin Data.Json" Clicked="OnPickDataJsonClicked"/>
+            </HorizontalStackLayout>
             <Grid>
                <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -103,25 +106,46 @@
                         </Entry.Triggers>
                     </Entry>
                       
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="4"
-                        Text="Native app settings token"/>
-                    <Entry 
-                        Grid.Column="1"
-                        Grid.Row="4"
-                        x:Name="SettingsToken"
-                        Text="{Binding NativeAppSettingsToken.Value, Mode=TwoWay}"
-                        Placeholder="f97c4322-c4e2-4403-a0ac-4fcc72f39159">
-                        <Entry.Triggers>
-                            <DataTrigger 
-                                TargetType="Entry"
-                                Binding="{Binding NativeAppSettingsToken.IsValid}"
-                                Value="False">
-                                <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
-                            </DataTrigger>
-                        </Entry.Triggers>
-                    </Entry>
+                    <VerticalStackLayout Grid.ColumnSpan="2" Grid.Row="4">
+                        <Label 
+                            Grid.Column="0"
+                            Grid.Row="4"
+                            Text="Native app settings token Android"/>
+                        <Entry 
+                            Grid.Column="1"
+                            Grid.Row="4"
+                            x:Name="SettingsTokenAndroid"
+                            Text="{Binding NativeAppSettingsTokenAndroid.Value, Mode=TwoWay}"
+                            Placeholder="f97c4322-c4e2-4403-a0ac-4fcc72f39159">
+                            <Entry.Triggers>
+                                <DataTrigger 
+                                    TargetType="Entry"
+                                    Binding="{Binding NativeAppSettingsTokenAndroid.IsValid}"
+                                    Value="False">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                         <Label 
+                            Grid.Column="0"
+                            Grid.Row="4"
+                            Text="Native app settings token iOS"/>
+                        <Entry 
+                            Grid.Column="1"
+                            Grid.Row="4"
+                            x:Name="SettingsTokenIOS"
+                            Text="{Binding NativeAppSettingsToken.Value, Mode=TwoWay}"
+                            Placeholder="f97c4322-c4e2-4403-a0ac-4fcc72f39159">
+                            <Entry.Triggers>
+                                <DataTrigger 
+                                    TargetType="Entry"
+                                    Binding="{Binding NativeAppSettingsToken.IsValid}"
+                                    Value="False">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ErrorRed}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                    </VerticalStackLayout>
                     
                     <Label 
                         Grid.Column="0"
@@ -430,6 +454,7 @@
                        <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2" >
                            <Label Text="Google Service Json File" HorizontalOptions="Center" Padding="0,10,0,0"/>
                            <Button Text="Pick Google Service Json File"  Clicked="OnPickGoogleServiceClicked" x:Name="Google"/>
+                           <StackLayout x:Name="GoogleFileStack" Margin="10" />
                        </VerticalStackLayout>
                    </Grid> 
                 </Grid>

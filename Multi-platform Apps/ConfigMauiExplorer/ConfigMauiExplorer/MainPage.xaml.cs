@@ -1,12 +1,14 @@
 ﻿using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using ConfigMauiExplorer.Interfaces;
 using ConfigMauiExplorer.Models;
 using ConfigMauiExplorer.Services;
 using Microsoft.Maui.Platform;
 using System.Text.Json.Serialization;
 using ConfigMauiExplorer.ViewModels;
+using SensorKit;
 using UniformTypeIdentifiers;
 
 namespace ConfigMauiExplorer;
@@ -23,6 +25,8 @@ public partial class MainPage : ContentPage
     
     private readonly IFolderPicker _folderPicker; 
     private readonly MainPageViewModel _viewModel;
+    
+    private string iOSMulti = "";
     
     public MainPage(IFolderPicker folderPicker, MainPageViewModel viewModel)
     {
@@ -87,16 +91,21 @@ public partial class MainPage : ContentPage
             androidAppConfig.CurrentAppUri = CurrentAppUri.Text;
             androidAppConfig.IsMultibrandedApp = IsMultibrandedApp.IsChecked;
             androidAppConfig.IsNonStoreApp = IsMultibrandedApp.IsChecked;
-            androidAppConfig.NativeAppSettingsToken = SettingsToken.Text;
+            androidAppConfig.NativeAppSettingsToken = SettingsTokenAndroid.Text;
             androidAppConfig.AppHostNames = AppHostNames.Text?.Split(',').Select(x => x.Trim()).ToList() ?? new List<string>();
             
+            if (IsMultibrandedApp.IsChecked)
+            {
+                iOSAppConfig.CurrentAppUri = iOSMulti;
+                iOSAppConfig.BaseUri = iOSMulti;
+            }
             iOSAppConfig.ApiUri = ApiUri.Text;
             iOSAppConfig.BaseUri = BaseUri.Text;
             iOSAppConfig.LoginUri = LoginUri.Text;
             iOSAppConfig.CurrentAppUri = CurrentAppUri.Text;
             iOSAppConfig.IsMultibrandedApp = IsMultibrandedApp.IsChecked;
             iOSAppConfig.IsNonStoreApp = IsMultibrandedApp.IsChecked;
-            iOSAppConfig.NativeAppSettingsToken = SettingsToken.Text;
+            iOSAppConfig.NativeAppSettingsToken = SettingsTokenIOS.Text;
             iOSAppConfig.AppHostNames = AppHostNames.Text?.Split(',').Select(x => x.Trim()).ToList() ?? new List<string>();
             
             androidAppConfig.PushSettings = new PushSettings()
@@ -154,34 +163,43 @@ public partial class MainPage : ContentPage
                     await stream.CopyToAsync(ms);
                     await File.WriteAllBytesAsync(Path.Combine(androidPath, "google-services.json"), ms.ToArray());
                 }
-
-                if (string.IsNullOrWhiteSpace(KeystoreText.Text) == false)
+                
+                if (!string.IsNullOrWhiteSpace(Keystore.FileName))
                 {
                     await using (var stream = await Keystore.OpenReadAsync())
                     {
                         using var ms = new MemoryStream();
                         await stream.CopyToAsync(ms);
+                        ms.Position = 0;
                         await File.WriteAllBytesAsync(Path.Combine(androidPath, "keystore.p12"), ms.ToArray());
                     }
                 }
-
-                if (string.IsNullOrWhiteSpace(CertificateText.Text) == false)
+                
+                if(Certificate != null)
                 {
-                    await using (var stream = await Certificate.OpenReadAsync())
+                    if (string.IsNullOrWhiteSpace(Certificate.FileName) == false)
                     {
-                        using var ms = new MemoryStream();
-                        await stream.CopyToAsync(ms);
-                        await File.WriteAllBytesAsync(Path.Combine(iosPath, "certificate.p12"), ms.ToArray());
+                        await using (var stream = await Certificate.OpenReadAsync())
+                        {
+                            using var ms = new MemoryStream();
+                            await stream.CopyToAsync(ms);
+                            ms.Position = 0;
+                            await File.WriteAllBytesAsync(Path.Combine(iosPath, "certificate.p12"), ms.ToArray());
+                        }
                     }
                 }
 
-                if (string.IsNullOrWhiteSpace(ProfileText.Text) == false)
+                if (Profile != null)
                 {
-                    await using (var stream = await Profile.OpenReadAsync())
+                    if (string.IsNullOrWhiteSpace(Profile.FileName) == false)
                     {
-                        using var ms = new MemoryStream();
-                        await stream.CopyToAsync(ms);
-                        await File.WriteAllBytesAsync(Path.Combine(iosPath, "provisioning-profile.mobileprovision"), ms.ToArray());
+                        await using (var stream = await Profile.OpenReadAsync())
+                        {
+                            using var ms = new MemoryStream();
+                            await stream.CopyToAsync(ms);
+                            ms.Position = 0;
+                            await File.WriteAllBytesAsync(Path.Combine(iosPath, "provisioning-profile.mobileprovision"), ms.ToArray());
+                        }
                     }
                 }
                 
@@ -199,7 +217,7 @@ public partial class MainPage : ContentPage
     private async Task GenerateAssets(string folder, string androidAssetsDirectory, string iosAssetsDirectory)  
     {
         var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://native.relesysapp.net/api/builds/assets/generate?code=xxxxxxxxxx");
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://native.relesysapp.net/api/builds/assets/generate?code=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         var content = new MultipartFormDataContent();
         content.Add(new StringContent(AppIconBackgroundColor.Text), "IconBackgroundColor");
         content.Add(new StringContent("android,ios"), "Targets");
@@ -401,6 +419,147 @@ public partial class MainPage : ContentPage
             var stream = await result.OpenReadAsync();
             GoogleServices = result;
             Google.Text = result.FullPath;
+
+            using var reader = new StreamReader(stream);
+            string json = await reader.ReadToEndAsync();
+            
+            JsonNode node = JsonNode.Parse(json);
+            LoadJsonAndCreateFields(json);
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+            throw;
+        }
+    }
+    private void LoadJsonAndCreateFields(string json)
+    {
+        GoogleFileStack.Children.Clear();
+        AddFieldsRecursive(JsonNode.Parse(json), "");
+    }
+    
+    private void AddFieldsRecursive(JsonNode node, string prefix)
+    {
+        if (node is JsonObject obj)
+        {
+            foreach (var prop in obj)
+            {
+                var key = string.IsNullOrEmpty(prefix) ? prop.Key : $"{prop.Key}";
+                AddFieldsRecursive(prop.Value, key);
+            }
+        }
+        else if (node is JsonArray arr)
+        {
+            for (int i = 0; i < arr.Count; i++)
+            {
+                AddFieldsRecursive(arr[i], $"{prefix}[{i}]");
+            }
+        }
+        else if (node is JsonValue val)
+        {
+            HorizontalStackLayout fieldStack = new HorizontalStackLayout();
+            
+            object rawValue = val.GetValue<object>();
+            fieldStack.Children.Add(new Label { Text = prefix + ": ", FontAttributes = FontAttributes.Bold });
+    
+            if (rawValue is bool boolVal)
+            {
+                fieldStack.Children.Add(new Label() { Text = boolVal.ToString() });
+            }
+            else
+            {
+                fieldStack.Children.Add(new Label() { Text = rawValue?.ToString() ?? "" });
+            }
+            
+            GoogleFileStack.Children.Add(fieldStack);
+        }
+    }
+
+    private async void OnPickDataJsonClicked(object? sender, EventArgs e)
+    {
+        try
+        {   
+            var result = await PickAndShow(PickOptions.Default);
+
+            if (result == null)
+                return;
+
+            var stream = await result.OpenReadAsync();
+            using (var reader = new StreamReader(stream))
+            {
+                string json = await reader.ReadToEndAsync();
+            
+                JsonNode node = JsonNode.Parse(json);
+
+                if (node is JsonObject obj)
+                {
+                    foreach (var prop in obj)
+                    {
+                        if (prop.Value is JsonArray array)
+                        {
+                            continue;
+                        }
+
+                        var value = prop.Value.ToString();
+                        var key = prop.Key;
+                        if (prop.Key == "RELESYS_DOMAIN_PREFIX")
+                        {
+                            _viewModel.BaseUri.Value = $"https://{value}.relesysapp.net";
+                            _viewModel.CurrentAppUri.Value = $"https://{value}.relesysapp.net";
+                        }
+                        else if (key == "RELESYS_APP_NAME")
+                        {
+                            _viewModel.ApplicationName.Value = value;
+                        }
+                        else if (key == "RELESYS_SPLASH_BACKGROUND")
+                        {
+                            _viewModel.SplashBackgroundColor.Value = "#" + value;
+                        }
+                        else if (key == "RELESYS_STATUS_BAR_CONTENT_STYLE_COLOR")
+                        {
+                            _viewModel.SplashContentColor.Value = "#" + value;
+                        }
+                        else if (key == "RELESYS_STATUS_BAR_CONTENT_STYLE")
+                        {
+                            IsSplasHBackgroudColorLight.IsChecked = value != "dark";
+                        }
+                        else if (key == "RELESYS_BUNDLE_IDENTIFIER")
+                        {
+                            _viewModel.KeystoreAlias.Value = value;
+                            _viewModel.SettingsPackageNameAndroid.Value = value;
+                        }
+                        else if (key == "RELESYS_BUNDLE_IDENTIFIER_IOS")
+                        {
+                            _viewModel.SettingsPackageNameiOS.Value = value;
+                        }
+                        else if (key == "RELESYS_MULTIBRANDED")
+                        {
+                            IsMultibrandedApp.IsChecked = value == "true";
+                        }
+                        else if (key == "RELESYS_CONTENT_PAGE")
+                        {
+                            if (!string.IsNullOrWhiteSpace(value))
+                            {
+                                _viewModel.BaseUri.Value = $"https://{value}.relesysapp.net";
+                                _viewModel.CurrentAppUri.Value = $"https://{value}.relesysapp.net";
+                            }
+                        }
+                        else if (key == "RELESYS_CONTENT_PAGE_IOS")
+                        {
+                            iOSMulti = value;
+                        }
+                        else if (key == "RELESYS_PUSH_PROVIDER_REFERENCE_DROID")
+                        {
+                            _viewModel.PushProviderSRefAndroid.Value = value;
+                        }
+                        else if (key == "RELESYS_PUSH_PROVIDER_REFERENCE_IOS")
+                        {
+                            _viewModel.PushProviderSRefIOS.Value = value;
+                        }
+                    }
+                }
+                
+            } 
         }
         catch (Exception exception)
         {

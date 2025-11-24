@@ -7,7 +7,7 @@ function love.load()
 	score = {}
 	ball = {}
 	Text = ""
-
+ 
 	world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
 	ball.sprite = love.graphics.newImage("assets/sprites/ball.png")

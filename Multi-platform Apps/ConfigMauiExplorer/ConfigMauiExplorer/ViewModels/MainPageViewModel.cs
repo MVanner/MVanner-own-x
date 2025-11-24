@@ -22,7 +22,9 @@ public partial class MainPageViewModel : ObservableObject
 
    [ObservableProperty]
    private ValidatableObject<string> _nativeAppSettingsToken = new();
-
+   [ObservableProperty]
+   private ValidatableObject<string> _nativeAppSettingsTokenAndroid = new();
+   
    [ObservableProperty]
    private ValidatableObject<string> _baseUri = new();
 
@@ -72,10 +74,10 @@ public partial class MainPageViewModel : ObservableObject
       CurrentAppUri.Validations.Add(new IsUrlRule<string>() { ValidationMessage = "Current App Uri cannot be empty" });
       LoginUri.Validations.Add(new IsUrlRule<string>() { ValidationMessage = "Login Uri cannot be empty" });
       NativeAppSettingsToken.Validations.Add(new IsNullOrEmptyRule<string>() { ValidationMessage = "Native App Settings Token cannot be empty" });
+      NativeAppSettingsTokenAndroid.Validations.Add(new IsNullOrEmptyRule<string>() { ValidationMessage = "Native App Settings Token cannot be empty" });
       BaseUri.Validations.Add(new IsUrlRule<string>() { ValidationMessage = "Base Uri cannot be empty" });
       PushProviderSRefIOS.Validations.Add(new IsNullOrEmptyRule<string>() { ValidationMessage = "Push Provider SRef iOS cannot be empty" });
       PushProviderSRefAndroid.Validations.Add(new IsNullOrEmptyRule<string>() { ValidationMessage = "Push Provider SRef Android cannot be empty" });
-      AppHostNames.Validations.Add(new IsNullOrEmptyRule<List<string>>() { ValidationMessage = "App Host Names cannot be empty" });
       CertificatePassword.Validations.Add(new IsNullOrEmptyRule<string>() { ValidationMessage = "Certificate Password cannot be empty" });
       KeystorePassword.Validations.Add(new IsNullOrEmptyRule<string>() { ValidationMessage = "Keystore Password cannot be empty" });
       KeystoreAlias.Validations.Add(new IsNullOrEmptyRule<string>() { ValidationMessage = "Keystore Alias cannot be empty" });
@@ -95,10 +97,10 @@ public partial class MainPageViewModel : ObservableObject
       isValid &= CurrentAppUri.Validate();
       isValid &= LoginUri.Validate();
       isValid &= NativeAppSettingsToken.Validate();
+      isValid &= NativeAppSettingsTokenAndroid.Validate();
       isValid &= BaseUri.Validate();
       isValid &= PushProviderSRefIOS.Validate();
       isValid &= PushProviderSRefAndroid.Validate();
-      isValid &= AppHostNames.Validate();
       isValid &= CertificatePassword.Validate();
       isValid &= KeystorePassword.Validate();
       isValid &= KeystoreAlias.Validate();
