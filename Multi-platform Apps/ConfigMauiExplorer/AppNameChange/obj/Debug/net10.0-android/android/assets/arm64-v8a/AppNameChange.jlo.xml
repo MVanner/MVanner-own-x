@@ -1,0 +1,15 @@
+<api>
+  <jcw-types>
+    <type name="MainActivity" package="com.companyname.appnamechange" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="crc6488302ad6e9e4df1a.MauiAppCompatActivity" partial_assembly_qualified_name="AppNameChange.MainActivity, AppNameChange">
+      <constructors>
+        <constructor name="MainActivity" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="MainActivity" method="n_.ctor:(I)V:" jni_signature="(I)V" managed_parameters="System.Int32, System.Private.CoreLib" params="int p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </constructors>
+    </type>
+    <type name="MainApplication" package="crc6472c088a993b1c566" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="crc6488302ad6e9e4df1a.MauiApplication" is_application="True" partial_assembly_qualified_name="AppNameChange.MainApplication, AppNameChange" application_constructor="MainApplication" />
+  </jcw-types>
+  <acw-types partial-assembly-name="AppNameChange" module-name="AppNameChange.dll">
+    <type assembly-qualified-name="AppNameChange.MainActivity, AppNameChange, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.companyname.appnamechange.MainActivity" java-key="com.companyname.appnamechange.MainActivity" managed-key="AppNameChange.MainActivity" partial-assembly-qualified-name="AppNameChange.MainActivity, AppNameChange" />
+    <type assembly-qualified-name="AppNameChange.MainApplication, AppNameChange, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="appnamechange.MainApplication" java-key="crc6472c088a993b1c566.MainApplication" managed-key="AppNameChange.MainApplication" partial-assembly-qualified-name="AppNameChange.MainApplication, AppNameChange" />
+  </acw-types>
+</api>

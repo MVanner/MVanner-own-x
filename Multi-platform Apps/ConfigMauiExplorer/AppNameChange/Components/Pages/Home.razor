@@ -1,0 +1,66 @@
+﻿@page "/"
+@using Android.Content
+@using Android.Content.PM
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+<button @onclick="ChangeIcon">Change new icon</button>
+<button @onclick="OldIcon">Old icon</button>
+
+@code
+{
+    private void ChangeIcon()
+    {
+        try
+        {
+            
+            Platform.CurrentActivity.PackageManager.SetComponentEnabledSetting(
+                new ComponentName(
+                    Platform.CurrentActivity,
+                    "com.companyname.appnamechange.MainActivityExtra"),
+                ComponentEnabledState.Enabled,
+                ComponentEnableOption.DontKillApp);
+
+            Platform.CurrentActivity.PackageManager.SetComponentEnabledSetting(
+                new ComponentName(
+                    Platform.CurrentActivity,
+                    "com.companyname.appnamechange.MainActivity"),
+                ComponentEnabledState.Disabled,
+                ComponentEnableOption.DontKillApp);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        // Logic to change the icon goes here
+    }
+
+    private void OldIcon()
+    {
+        try
+        {
+            
+            Platform.CurrentActivity.PackageManager.SetComponentEnabledSetting(
+                new ComponentName(
+                    Platform.CurrentActivity,
+                    "com.companyname.appnamechange.MainActivity"),
+                ComponentEnabledState.Enabled,
+                ComponentEnableOption.DontKillApp);
+
+            Platform.CurrentActivity.PackageManager.SetComponentEnabledSetting(
+                new ComponentName(
+                    Platform.CurrentActivity,
+                    "com.companyname.appnamechange.MainActivityExtra"),
+                ComponentEnabledState.Disabled,
+                ComponentEnableOption.DontKillApp);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+}

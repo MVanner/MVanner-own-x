@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="welcome_message">Welcome to MyApp!</string>
+    <string name="login_button">Log In</string>
+    <string name="signup_button">Sign Up</string>
+    <string name="logout_button">Log Out</string>
+    <string name="profile_title">User Profile</string>
+    <string name="settings_title">Settings</string>
+</resources>
